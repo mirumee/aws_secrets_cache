@@ -1,0 +1,28 @@
+#python compiled files
+*.py[cod]
+__pycache__
+
+#virtual env
+.env
+
+#package related files / dirs
+*.deb
+dist
+build
+sdist
+MANIFEST
+.project
+*.egg-info
+
+#pytest cache
+.cache
+.pytest_cache
+.mypy_cache
+
+# IDE stuff
+.idea
+.pydevproject
+.settings
+.vscode
+
+Pipfile.lock

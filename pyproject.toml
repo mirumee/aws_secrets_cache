@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "aws-secrets-cache"
+version = "0.1.0"
+description = ""
+authors = ["Łukasz Kostka <lukasz.kostka@mirumee.com>"]
+readme = "README.md"
+packages = [{include = "aws_secrets_cache"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+boto3 = "^1.26.144"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
