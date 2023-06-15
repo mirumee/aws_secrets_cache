@@ -1,9 +1,6 @@
 import time
 
-import boto3
 import botocore
-
-client = boto3.client('secretsmanager')
 
 class CacheEntry:
 
@@ -20,6 +17,8 @@ class CacheEntry:
 
 class Secrets:
 
+    __slots__ = ('client', 'kms_key_id', 'cache', 'ttl')
+
     def __init__(self, client, kms_key_id='alias/aws/secretsmanager', ttl=300):
         self.client = client
         self.kms_key_id = kms_key_id
@@ -27,9 +26,9 @@ class Secrets:
         self.ttl = ttl
 
     def __setitem__(self,key,val):
-        secret_type = 'SecretBinary' if type(b'') == bytes else 'SecretString'
+        secret_type = 'SecretBinary' if type(val) == bytes else 'SecretString'
         try:
-            client.put_secret_value(**{'SecretId':key, secret_type:val})
+            self.client.put_secret_value(**{'SecretId':key, secret_type:val})
         except botocore.exceptions.ClientError as err:
             if err.response['Error']['Code'] == 'ResourceNotFoundException':
                 self.client.create_secret(**{'Name':key, secret_type:val, 'KmsKeyId':self.kms_key_id})
@@ -39,7 +38,7 @@ class Secrets:
 
     def fetch_secret(self, key):
         found = self.client.get_secret_value(SecretId=key)
-        value = found['SecretString'] or found['SecretBinary']
+        value = found.get('SecretString') or found['SecretBinary']
         return CacheEntry(value=value)
 
     def __getitem__(self, key):
