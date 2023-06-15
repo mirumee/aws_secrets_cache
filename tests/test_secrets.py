@@ -4,7 +4,6 @@ import boto3
 import os
 from unittest.mock import Mock
 
-
 import aws_secrets_cache
 
 
@@ -38,7 +37,7 @@ def test_set_then_get(value):
 @pytest.mark.parametrize('kind,value', (
     ('SecretBinary', b'value'),
     ('SecretString', 'value'),
-    ))
+))
 def test_set_string(smclient, kind, value):
     cache = aws_secrets_cache.Secrets(client=smclient)
     cache['name'] = value
@@ -49,8 +48,8 @@ def test_set_string(smclient, kind, value):
 @pytest.mark.parametrize('kind,value', (
     ('SecretBinary', b'value'),
     ('SecretString', 'value'),
-    ))
+))
 def test_get_string(smclient, kind, value):
-    smclient.create_secret(**{'Name':'name', kind:value})
+    smclient.create_secret(**{'Name': 'name', kind: value})
     cache = aws_secrets_cache.Secrets(client=smclient)
     assert cache['name'] == value

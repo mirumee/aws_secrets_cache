@@ -2,6 +2,7 @@ import time
 
 import botocore
 
+
 class CacheEntry:
 
     __slots__ = ('value', 'ctime')
@@ -25,13 +26,17 @@ class Secrets:
         self.cache = dict()
         self.ttl = ttl
 
-    def __setitem__(self,key,val):
+    def __setitem__(self, key, val):
         secret_type = 'SecretBinary' if type(val) == bytes else 'SecretString'
         try:
-            self.client.put_secret_value(**{'SecretId':key, secret_type:val})
+            self.client.put_secret_value(**{'SecretId': key, secret_type: val})
         except botocore.exceptions.ClientError as err:
             if err.response['Error']['Code'] == 'ResourceNotFoundException':
-                self.client.create_secret(**{'Name':key, secret_type:val, 'KmsKeyId':self.kms_key_id})
+                self.client.create_secret(**{
+                    'Name': key,
+                    secret_type: val,
+                    'KmsKeyId': self.kms_key_id
+                })
             else:
                 raise err
         self.cache[key] = CacheEntry(value=val)
