@@ -5,6 +5,7 @@ description = ""
 authors = ["Łukasz Kostka <lukasz.kostka@mirumee.com>"]
 readme = "README.md"
 packages = [{include = "aws_secrets_cache"}]
+license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
 python = "^3.9"
