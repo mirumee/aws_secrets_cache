@@ -16,7 +16,7 @@ pytest = "^7.3.2"
 moto = "^4.1.11"
 black = "^23.3.0"
 ruff = "^0.0.272"
-yapf = "^0.40.0"
+yapf = "^0.40.1"
 
 [build-system]
 requires = ["poetry-core"]
