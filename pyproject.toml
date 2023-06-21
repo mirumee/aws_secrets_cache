@@ -15,7 +15,7 @@ boto3 = "^1.26.155"
 pytest = "^7.3.2"
 moto = "^4.1.11"
 black = "^23.3.0"
-ruff = "^0.0.272"
+ruff = "^0.0.274"
 yapf = "^0.40.0"
 
 [build-system]
