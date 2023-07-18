@@ -53,3 +53,10 @@ def test_get_string(smclient, kind, value):
     smclient.create_secret(**{'Name': 'name', kind: value})
     cache = aws_secrets_cache.Secrets(client=smclient)
     assert cache['name'] == value
+
+
+def test_set_string_prefixed(smclient):
+    cache = aws_secrets_cache.Secrets(client=smclient, prefix='/prefix/')
+    cache['name'] = 'value'
+    response = smclient.get_secret_value(SecretId='/prefix/name')
+    assert 'value' == response['SecretString']
