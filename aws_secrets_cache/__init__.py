@@ -50,7 +50,7 @@ class Secrets:
         self.cache[key] = CacheEntry(value=val)
 
     def fetch_secret(self, key):
-        key = self.prefix + key
+        key = key
         found = self.client.get_secret_value(SecretId=key)
         value = found.get('SecretString') or found['SecretBinary']
         return CacheEntry(value=value)

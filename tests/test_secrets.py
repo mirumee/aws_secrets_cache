@@ -60,3 +60,12 @@ def test_set_string_prefixed(smclient):
     cache['name'] = 'value'
     response = smclient.get_secret_value(SecretId='/prefix/name')
     assert 'value' == response['SecretString']
+
+
+def test_get_existed_not_cached(smclient):
+    cache = aws_secrets_cache.Secrets(client=smclient, prefix='/prefix/')
+    smclient.create_secret(
+        Name='/prefix/key',
+        SecretString='value',
+    )
+    assert cache['key'] == 'value'
