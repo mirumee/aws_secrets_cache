@@ -14,7 +14,7 @@ boto3 = "^1.26.163"
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.4,<9.0"
 moto = "^4.1.12"
-black = "^23.3.0"
+black = ">=23.3,<25.0"
 ruff = ">=0.0.275,<0.1.16"
 yapf = "^0.40.1"
 
